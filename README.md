@@ -58,3 +58,8 @@ Usage of REST APIs
     "ispresent": "Y",
     "absent_reason": ""
 }
+
+Credits
+--------
+
+Karnataka Learning Partnership: https://github.com/klpdotorg 
