@@ -1,0 +1,18 @@
+
+Scope:
+
+Mobile Application
+ - Attendance tracking for students & teachers
+ - Reporting images with locations
+ - SMS to the parents
+ - Mobile website view on mobile
+
+Web Application
+ - Reading details from the database and mapping it in the OpenStreetMap
+ - Updating the details to the database (Need to check)
+ 
+Future scope
+ -  
+ 
+ 
+

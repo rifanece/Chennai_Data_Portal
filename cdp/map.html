@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- META -->
+	<title>Map</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta name="description" content="" />
+	<link rel="stylesheet" type="text/css" href="css/style.css" media="all" /> 
+	<link rel="stylesheet" type="text/css" href="css/map.css"/>
+	<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+	
+	<!--
+	<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js'></script>
+	
+	<script type="text/javascript" src="http://www.blurjs.com/blur.js"></script>
+	 <script type="text/javascript" src="http://gianlucaguarini.github.io/Vague.js/Vague.js"></script> -->
+<script src="http://openlayers.org/api/OpenLayers.js" type="text/javascript"></script>
+	<script type="text/javascript" src="js/jquery.slimscroll.min.js"></script>
+	<!-- 
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+	<script type="text/javascript" src="http://jquery-ui-map.googlecode.com/svn/trunk/ui/jquery.ui.map.js"></script>
+	 -->
+
+	<!--[if lt IE 9]>
+	<script src="js/html5shiv.js"></script>
+	<![endif]-->
+
+	<!--[if IE 6]>
+	<script src="js/DD_belatedPNG_0.0.8a-min.js"></script>
+	<script>
+	  DD_belatedPNG.fix('.nav, a ,img, .png24');
+	</script>
+	<![endif]-->
+</head>
+<body>
+	<div class="map_page">
+
+		<header class="main-header full_width fixed">
+			<div class="header-wrapper">
+				<div class="header-content">
+					<nav class="top-nav" role="navigation">
+						<ul id="navigation">
+					<li class="home">
+						<a href="index.php" title=""><h1>Chennai Data Portal</h1></a>
+					</li>
+					<li class="school_map">
+						<a href="map.html" title="">School Map</a>
+					</li>
+					
+					<li class="reports"><a href="reports.php" title="">Reports</a></li>
+					<li class="about">
+						<a href="about.php" title="">About</a>
+						<ul>
+							<li><a href="about.php" title=""><span></span>About</a></li>
+						</ul>
+					</li>
+				</ul>
+					</nav>
+					<div class="clr"></div>
+				</div>
+			</div>
+
+			<div class="subheader-wrapper">
+				<div class="subheader-content">
+					<div class="breadcrumb">
+				    	<a href="index.php">Home</a><span></span>
+				    	<a href="map.html">School map</a>
+				    </div>
+				</div>
+			</div>
+		</header>
+
+		<section id="map_canvas" class="map_canvas_full">
+			<div id="popup"> </div>
+		</section>
+
+		<section id="sidebar_wrapper" class="sidebar_wrapper">
+
+		</section>
+
+		<section id="map_overlay" class="map_overlay">
+			<a href="javascript:close_overlay()" class="close_btn" title="Close"><!-- Close --><span></span></a>
+			<div class="content">
+				<div class="effect_to_be_done"></div>
+				<div class="info"></div>
+				<div class="fr">
+
+				</div>
+				<div class="clr">
+				</div>
+				<ul class="tabs">
+					<li data-tab="tab-info" class="current">Info</li>
+					<li data-tab="tab-teachers">Teachers</li>
+					<li data-tab="tab-programmes">Programmes</li>
+					<li data-tab="tab-infrastructure">Infrastructure</li>
+					<li data-tab="tab-attendance">Attendance</li>
+					<li data-tab="tab-story">Share your story</li>
+				</ul>
+
+				<!-- Info Tab BEGIN -->
+				<div id="tab-info" class="tab_content current">
+					<div class="fl">
+						<h4>Address</h4>
+						<div id="tab-address"></div>
+
+						<h4>School Information</h4>
+						<div id="tab-school-info"></div>
+					</div>
+					<div class="clr"></div>
+				</div>
+				<!-- Info Tab END -->
+				
+				<!-- Demographics Tab BEGIN -->
+				<div id="tab-teachers" class="tab_content">
+					<div class="fl">
+						<h4>Teacher Information</h4>
+						<div id="tab-teachers-info"></div>
+	
+					</div>
+					<div class="fr">
+						<div id="bar_graph_hor"></div>
+	
+					</div>
+					<div class="clr"></div>
+
+					<h4>TN Teacher Data</h4>
+					<table class="info_data_table label_small">
+						<tr>
+							<td>Source</td>
+							<td>Chennai Rising <br/><strong>Copyright (R) 2014</strong></td>
+						</tr>
+					</table>
+
+					<div class="top_bordered_block">
+
+					</div>
+				</div>
+				<!-- Demographics Tab END -->
+
+				<!-- Programme Tab BEGIN -->
+				<div id="tab-programmes" class="tab_content">
+					<h4>Programme Information</h4>
+					<a href="http://www.teachforindia.org/" class="black external"><b>Teach For India (2006)</b></a><br/>
+
+					<table class="info_data_table label_small mar_top_25">
+						<tr>
+							<td>Source</td>
+							<td>Chennai Rising <br/><strong>Copyright (R) 2014</strong></td>
+						</tr>
+					</table>
+					<div class="top_bordered_block">
+
+					</div>
+				</div>
+				<!-- Programme Tab END -->
+
+				<!-- Infrastructure Tab BEGIN -->
+				<div id="tab-infrastructure" class="tab_content">
+					<h4>Infrastructure</h4>
+
+					<table class="infra_data_table mar_btm_25 fl">
+
+					</table>
+
+					<div class="infra_data_indicators fr">
+						<div class="green item">Indicates infrastructure present</div>
+						<div class="red item">Indicates infrastructure absent</div>
+						<div class="grey item">Indicates information unavailable</div>
+					</div>
+					<div class="clr"></div>
+
+					<div class="top_bordered_block">
+
+					</div>
+				</div>
+				<!-- Infrastructure Tab END -->
+
+
+				<!-- Attendance Tab BEGIN -->
+				<div id="tab-attendance" class="tab_content">
+					<h4>Attendance Students</h4>
+
+						<h4>Classes</h4>
+						<div class="bar_graph_hor">
+
+						</div>
+
+					<div class="top_bordered_block">
+					</div>
+					
+				</div>
+				<!-- Attendance Tab END -->
+
+				<!-- Share Your Story Tab BEGIN -->
+				<div id="tab-story" class="tab_content">
+					<div class="top_bordered_block">
+						<a href="https://www.facebook.com/sharer/sharer.php?u=http://opportunityhack2014chennai.challengepost.com/" target="_blank"><img src='images/share.png' style="width:80px;height:36px;border:0"></img></a>
+					</div>
+					
+				</div>
+				<!-- Nutrition Tab END -->				
+			</div>
+		</section>
+
+	</div>
+	<script type="text/javascript">
+
+		$(document).ready(function(){
+			$('#map_overlay').toggle();
+			resize_pageElements();
+			load_map();
+			get_school_list();
+
+
+			// Tabs handler
+			$('ul.tabs li').click(function(){
+				var tab_id = $(this).attr('data-tab');
+
+				$('ul.tabs li').removeClass('current');
+				$('.tab_content').removeClass('current');
+
+				$(this).addClass('current');
+				$("#"+tab_id).addClass('current');
+			});
+		});
+
+		$(window).resize(function() {
+			resize_pageElements();
+		});
+		
+		var schools_json;
+		
+		function get_school_list() {
+		
+		$.getJSON( "http://192.168.120.192/api/schools/list" , function( data ) {
+		 var items = [];
+		items.push("<ul>");
+		$.each( data, function( index, record ) {
+			items.push( "<a href='#' onclick='javascript:open_details("+JSON.stringify(record)+", null , null);' id='school_details'><li class='place_item'>	<div class='details'>")
+			items.push( "<h3>" + record['school_name'] + "</h3>" );
+			items.push("<div class='info'>");
+			$.each(['address_line_1', 'address_line_2', 'area', 'city', 'pincode'], function(index, val) {
+				if(record[val])
+					items.push(record[val] + " <br/>");
+			});
+			items.push("</div>");
+			items.push("</li></a>");
+			schools_json=JSON.stringify(record);
+		});
+		items.push("</ul>");
+		$(".sidebar_wrapper").append(items.join(""));
+			});
+		}
+		
+		var map, layer;
+		function load_map(){		
+	
+			map = new OpenLayers.Map("map_canvas");
+			var mapnik         = new OpenLayers.Layer.OSM();
+			var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+			var toProjection   = new OpenLayers.Projection("EPSG:3857"); // to Spherical Mercator Projection
+			var position       = new OpenLayers.LonLat(80.2700,13.0839).transform( fromProjection, toProjection);
+			var zoom           = 0;     
+			map.addLayer(mapnik);
+			map.setCenter(position, zoom );
+			$.getJSON("http://192.168.120.192/api/schools/geodata", function(data) {
+				$.each( data, function( index, record ) {
+					putMarker(record['geo_latitude'],record['geo_longitude']);
+					});
+			});
+
+			function clickMarker(e) {
+				var pos = map.getLonLatFromPixel(e.xy);
+			}
+
+            function putMarker(latMarca, lonMarca)
+            {
+                var lonLat = new OpenLayers.LonLat(lonMarca ,latMarca ).transform(new OpenLayers.Projection("EPSG:4326"),map.getProjectionObject());
+                var zoom=16;
+                var markers = new OpenLayers.Layer.Markers( "Markers" );
+                map.addLayer(markers);
+                markers.addMarker(new OpenLayers.Marker(lonLat));
+                map.setCenter (lonLat, zoom);
+				markers.events.register('click', markers, clickMarker);
+            }
+		}
+		function close_overlay() {
+			$('#map_overlay').hide();
+		}
+		
+		function open_details(json) {
+			var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+			var toProjection   = new OpenLayers.Projection("EPSG:3857"); // to Spherical Mercator Projection
+			var position       = new OpenLayers.LonLat(json['geo_longitude'], json['geo_latitude']).transform( fromProjection, toProjection);
+			map.setCenter(position, 15);
+			$('#map_overlay .content .info').html("<div class='fl'>"
+					+	"<h2>"+ json['school_name']+"</h2>"
+					+	"<div class='item'> "
+					+		"<div class='label'>District</div>"
+					+		"<div class='value'>"+json['city']+"</div>"
+					+	"</div>"
+					+	"<div class='item'>"
+					+		"<div class='label'>Area</div>"
+					+		"<div class='value'>"+json['area']+"</div>"
+					+	"</div>"
+					+	"<div class='item'>"
+					+		"<div class='label'>Pincode</div>"
+					+		"<div class='value'>"+json['pincode']+"</div>"
+					+"	</div>"
+					+"</div>");
+			$('#tab-address').html("<p>"+json['address_line_1']+" <br/>"+json['address_line_2']+"<br/><strong>"+json['city']+"</strong> - "+json['pincode']+"</p>");
+			
+			$('#tab-school-info').html("<table class='info_data_table'><tr><td>Category</td>"
+								+"<td>"+json['school_category']+"</td>"
+							+"</tr>"
+							+"<tr>"
+								+"<td>Gender</td>"
+								+"<td>"+json['school_type']+"</td>"
+							+"</tr>"
+							+"<tr>"
+								+"<td>Medium</td>"
+								+"<td>"+json['medium']+"</td>"
+							+"</tr></table>");
+
+			$.getJSON("http://192.168.120.192/api/staffs/"+json['school_id'], function(data) {
+				var staffs= 0;
+				$.each( data, function( index, record ) {
+					staffs++;
+				});
+				$('#tab-teachers-info').html("<table class='info_data_table'><tr><td>Number of Staff</td>"
+					+"<td>"+staffs+"</td>"
+					+"</tr>"
+					+"</table>");
+				});
+		
+			$.getJSON("http://192.168.120.192/api/staffs/attendance/"+json['school_id'], function(data) {
+				var present = 0;
+				var absent = 0;
+				$.each( data, function( index, record ) {
+					if(record['turnout_yn'] == 'Y')
+						present++;
+					else
+						absent++;
+				});
+				var percentage = (present/present+absent)/100;
+				$('#tab-teachers .fr .bar_graph_hor').html("<div class='item'> <div class='label'>Attendance</div><div class='bar'><div class='value' style='width:"+percentage.toString()+"%;'></div></div>");
+			});
+			$.getJSON("http://192.168.120.192/api/infrastructures/"+json['school_id'], function(data) {
+				$.each( data, function( index, record ) {
+							var str=[]
+							str.push("				<tr>"
+											+"<td>Toilet Facilities</td>"
+											+"<td>");
+							
+							if(record['common_toilets_yn'] == 'Y') {
+								str.push("<div class= 'green'>Has Usable Toilets</div>");
+								str.push("<div class='green'>Number of Common Toilets: "+record['toilets_common_cnt']+" </div>");
+							}
+							else if(record['common_toilets_yn'] == 'N') {
+								str.push("<div class= 'red'>Has Usable Toilets</div>");
+							}
+							else {
+								str.push("<div class= 'grey'>Has Usable Toilets</div>");
+							}
+							
+							if(record['toilets_girls_yn'] == 'Y') {
+								str.push("<div class='green'> Has Seperate Toilet for Girls</div>");
+								str.push("<div class='green'>Number of Girls Toilets: "+record['toilets_female_cnt']+" </div>");
+							}
+							else if(record['toilets_girls_yn'] == 'N') {
+								str.push("<div class= 'red'>Has Seperate Toilet for Girls</div>");
+							}
+							else {
+								str.push("<div class= 'grey'>Has Seperate Toilet for Girls</div>");
+							}
+							
+							if(record['toilets_male_cnt'] > 0) {
+								str.push("<div class='green'>Number of Boys Toilets: "+record['toilets_male_cnt']+" </div>");
+							}							
+							str.push("</td></tr>");
+					$('table.infra_data_table').html(str.join(""));
+					});
+			});
+			$.getJSON("http://192.168.120.192/api/classes/"+json['school_id'], function(data) {
+	
+			$.each( data, function( index, record ) {
+				$.getJSON("http://192.168.120.192/api/students/attendance/"+json['school_id']+"/"+record, function(data) {
+					var str = [];
+					var present = 0;
+					var absent = 0;
+					str.push("<div class='item'>");
+					str.push("<div class='label'>"+record+"</div>");
+					$.each( data, function( index, record ) {
+						if(record['turnout_yn'] == 'Y')
+							present++;
+						else
+							absent++;
+					});
+					var percentage = (present/present+absent)*100;
+					str.push("<div class='bar'><div class='value' style='width:"+percentage.toString()+"%;'></div></div>");
+					$('#tab-attendance .bar_graph_hor').html(str.join(""));
+				});
+				});
+			});
+			
+			$.getJSON("http://192.168.120.192/api/classes/"+json['school_id'], function(data) {
+	
+			$.each( data, function( index, record ) {
+				$.getJSON("http://192.168.120.192/api/students/attendance/"+json['school_id']+"/"+record, function(data) {
+					var str = [];
+					var present = 0;
+					var absent = 0;
+					str.push("<div class='item'>");
+					str.push("<div class='label'>"+record+"</div>");
+					$.each( data, function( index, record ) {
+						if(record['turnout_yn'] == 'Y')
+							present++;
+						else
+							absent++;
+					});
+					var percentage = (present/present+absent)*100;
+					str.push("<div class='bar'><div class='value' style='width:"+percentage.toString()+"%;'></div></div>");
+					$('#tab-attendance .bar_graph_hor').html(str.join(""));
+				});
+				});
+			});
+			
+			$('#map_overlay').show();
+		}
+
+		function resize_pageElements(){
+			var sidebar_height = $(window).height() - $(".main-header").height();
+			$("#sidebar_wrapper").css({'height': sidebar_height + 'px'});
+			$("#sidebar_wrapper").css({'padding-top': '1px'}); 	// Extra 1px for fixing rounding off errors durng height calculation
+
+			// Sidebar scrolling
+			$('#sidebar_wrapper ul').slimScroll({
+		        height: sidebar_height+'px',
+		        size: '5px',
+		        color: '#8d8d8d',
+		        railVisible: true,
+		    });
+
+			// Map overlay
+		    var map_overlay_top = $(".main-header").height()+20+100;
+			$("#map_overlay").css({'top': map_overlay_top + 'px'});
+
+		    var map_overlay_height = sidebar_height-40;
+		    var map_overlay_width = $(window).width() - (320+40);
+		    $("#map_overlay").css({'height': map_overlay_height + 'px'});
+		    $("#map_overlay").css({'width': map_overlay_width + 'px'});
+		}
+
+		function fill_pseudo_select(){
+			$(".select_pseudo").each(function() { 
+				var options_list = new Array();
+				var options_list_html = '';
+				$("option").each(function(){ 
+					options_list[$(this).val()] = $(this).text();
+
+					options_list_html += '<li>'+$(this).text()+'</li>';
+					//alert($(this).text()); 
+				});
+				//$(this).("ul").html(options_list_html);
+				console.log(options_list);
+				//alert('fdff'); 
+			});
+		}
+	</script>
+
+
+</body>
+</html>
