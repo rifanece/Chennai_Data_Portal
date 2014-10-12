@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block page_title %}Reports{% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+
+	<section class="page-contact">
+		<div class="container">
+			<h1 class="bordered red">Reports</h1>
+			<a href="http://192.168.120.192/cdp/report/Students_Teachers_count.html" target="_blank">Teacher Student Demographics</a><br/>
+			<a href="http://192.168.120.192/cdp/report/Toilet_count.html" target="_blank">Toilet Facilities</a><br/>
+			<a href="http://192.168.120.192/cdp/report/Computer_lab_count.html" target="_blank">Lack of Computer Labs</a><br/>
+			<a href="http://192.168.120.192/cdp/report/Library_count.html" target="_blank">Lack of Library</a><br/>
+			<a href="http://192.168.120.192/cdp/report/Play_ground_count.html" target="_blank">Lack of Playground</a><br/>
+		</div>
+	</section>
+
+{% endblock %}

@@ -563,7 +563,7 @@ a {
     .top-nav ul li.home a {
       background-repeat: no-repeat;
       background-position: left center;
-      background-image: url("../images/KLP_logo.png");
+      /*background-image: url("../images/KLP_logo.png");*/
       text-indent: 100%;
       white-space: nowrap;
       overflow: hidden;
@@ -1762,17 +1762,17 @@ a.external {
     padding-top: 30px;
     min-height: 670px;
     overflow: hidden;
-    background: url("../images/hp_student.png") no-repeat bottom right;
+    /*background: url("../images/hp_student.png") no-repeat bottom right;*/
     *height: 700px !important; }
   .home-header .blackboard_wrapper h1 {
     background-repeat: no-repeat;
     background-position: center center;
-    background-image: url("../images/home_klp_logo.png");
+    background-image: url("../images/home_klp_logo.gif");
     text-indent: 100%;
     white-space: nowrap;
     overflow: hidden;
     width: 100%;
-    height: 162px;
+    height: 200px;
     padding: 0;
     margin: 0;
     *background-position-x: 25%;
@@ -1811,13 +1811,23 @@ a.external {
   .home-header .blackboard_wrapper .info {
     width: 560px;
     margin-top: 50px;
+    font-size: 22px;
+    line-height: 26px;
+    color: #FFF;
+    font-weight:unset; }
+	.home-header .blackboard_wrapper .info1 {
+    width: 560px;
+    margin-top: 50px;
     font-size: 16px;
     line-height: 26px;
-    color: #ddd;
-    font-weight: 300; }
+    color: #FFF;
+    font-weight:unset; }
+	
     .home-header .blackboard_wrapper .info p {
-      color: #d8d8d8;
-      margin: 0; }
+      color: #FFF;
+      margin: 0;
+	  font-family: "Lato", sans-serif;
+	  }
     .home-header .blackboard_wrapper .info a {
       color: #6d6d6d; }
     @media screen and (min-width: 768px) and (max-width: 979px) {

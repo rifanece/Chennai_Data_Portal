@@ -47,33 +47,12 @@
 					<li class="school_map">
 						<a href="map.html" title="">School Map</a>
 					</li>
-					<li class="programmes">
-						<a href="programmes.php" title="">Programmes</a>
-						<ul>
-							<li><a href="reading_programme.php" title=""><span></span>Reading</a></li>
-							<li><a href="maths_programme.php" title=""><span></span>Math</a></li>
-							<li><a href="library_programme.php" title=""><span></span>Library</a></li>
-							<li><a href="preschool_programme.php" title=""><span></span>Pre-School</a></li>
-						</ul>
-					</li>
-					<li class="volunteer"><a href="volunteer.php" title="">Volunteer</a></li>
-					<li class="database">
-						<a href="status_1.php" title="">Database</a>
-						<ul>
-							<li><a href="status_1.php" title=""><span></span>Status 1</a></li>
-							<li><a href="status_2.php" title=""><span></span>Status 2</a></li>
-							<li><a href="status_3.php" title=""><span></span>Status 3</a></li>
-							<li><a href="#" title=""><span></span>Raw Data</a></li>
-							<li><a href="#" title=""><span></span>Github</a></li>
-						</ul>
-					</li>
-					<li class="reports"><a href="#" title="">Reports</a></li>
+					
+					<li class="reports"><a href="reports.php" title="">Reports</a></li>
 					<li class="about">
 						<a href="about.php" title="">About</a>
 						<ul>
 							<li><a href="about.php" title=""><span></span>About</a></li>
-							<li><a href="partners.php" title=""><span></span>Partners</a></li>
-							<li><a href="disclaimer.php" title=""><span></span>Disclaimer</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -85,8 +64,8 @@
 			<div class="subheader-wrapper">
 				<div class="subheader-content">
 					<div class="breadcrumb">
-				    	<a href="">Home</a><span></span>
-				    	<a href="">School map</a>
+				    	<a href="index.php">Home</a><span></span>
+				    	<a href="map.html">School map</a>
 				    </div>
 				</div>
 			</div>
@@ -250,13 +229,15 @@
 			resize_pageElements();
 		});
 		
+		var schools_json;
+		
 		function get_school_list() {
 		
 		$.getJSON( "http://192.168.120.192/api/schools/list" , function( data ) {
 		 var items = [];
 		items.push("<ul>");
 		$.each( data, function( index, record ) {
-			items.push( "<a href='#' onclick='javascript:open_details("+JSON.stringify(record)+");' id='school_details'><li class='place_item'>	<div class='details'>")
+			items.push( "<a href='#' onclick='javascript:open_details("+JSON.stringify(record)+", null , null);' id='school_details'><li class='place_item'>	<div class='details'>")
 			items.push( "<h3>" + record['school_name'] + "</h3>" );
 			items.push("<div class='info'>");
 			$.each(['address_line_1', 'address_line_2', 'area', 'city', 'pincode'], function(index, val) {
@@ -265,22 +246,22 @@
 			});
 			items.push("</div>");
 			items.push("</li></a>");
+			schools_json=JSON.stringify(record);
 		});
 		items.push("</ul>");
 		$(".sidebar_wrapper").append(items.join(""));
 			});
 		}
 		
-
+		var map, layer;
 		function load_map(){		
-		
-			var map, layer;
+	
 			map = new OpenLayers.Map("map_canvas");
 			var mapnik         = new OpenLayers.Layer.OSM();
 			var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
 			var toProjection   = new OpenLayers.Projection("EPSG:3857"); // to Spherical Mercator Projection
 			var position       = new OpenLayers.LonLat(80.2700,13.0839).transform( fromProjection, toProjection);
-			var zoom           = 15;     
+			var zoom           = 0;     
 			map.addLayer(mapnik);
 			map.setCenter(position, zoom );
 			$.getJSON("http://192.168.120.192/api/schools/geodata", function(data) {
@@ -289,6 +270,9 @@
 					});
 			});
 
+			function clickMarker(e) {
+				var pos = map.getLonLatFromPixel(e.xy);
+			}
 
             function putMarker(latMarca, lonMarca)
             {
@@ -298,6 +282,7 @@
                 map.addLayer(markers);
                 markers.addMarker(new OpenLayers.Marker(lonLat));
                 map.setCenter (lonLat, zoom);
+				markers.events.register('click', markers, clickMarker);
             }
 		}
 		function close_overlay() {
@@ -305,6 +290,10 @@
 		}
 		
 		function open_details(json) {
+			var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+			var toProjection   = new OpenLayers.Projection("EPSG:3857"); // to Spherical Mercator Projection
+			var position       = new OpenLayers.LonLat(json['geo_longitude'], json['geo_latitude']).transform( fromProjection, toProjection);
+			map.setCenter(position, 15);
 			$('#map_overlay .content .info').html("<div class='fl'>"
 					+	"<h2>"+ json['school_name']+"</h2>"
 					+	"<div class='item'> "
