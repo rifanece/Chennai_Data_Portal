@@ -64,6 +64,6 @@ Usage of REST APIs
 }
 
 Credits
---------
+---------
 
 Karnataka Learning Partnership: https://github.com/klpdotorg 
